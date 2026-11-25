@@ -43,7 +43,7 @@ class CodexPackageTests(unittest.TestCase):
         monolith = roles["monolith"]
         self.assertIn("실제 span과 룰 ID", monolith)
         self.assertIn("D → A → I → G → H → F → B → C·J → E", monolith)
-        self.assertIn("자체검증 6항", monolith)
+        self.assertIn("자체검증 7항", monolith)
         self.assertIn("위반 edit만 한 번 롤백", monolith)
         self.assertIn("청크 출력이면 summary 없이", monolith)
         self.assertIn("50% 변경에 임박하면 추가 편집을 멈춘다", monolith)

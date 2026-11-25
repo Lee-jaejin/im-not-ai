@@ -107,4 +107,4 @@ python3 "${SKILL_ROOT}/scripts/verify_gates.py" --before "$RUN_DIR/01_input.txt"
 
 ## 결과 계약
 
-최종 응답에 상태(`완료. 경로 ROUTE / 변경률 X% / 등급 Y / 자체검증 N/6 통과`), 최종 윤문본 또는 `final.md` 링크, 핵심 before→after, 진단·게이트·finalize 상태와 남은 경고를 포함한다. 변경률은 `verify_gates.py` 출력값을 SSOT로 사용한다. `final.md`에는 `<!-- HUMANIZE-SUMMARY -->` 블록을 정확히 하나 유지한다.
+최종 응답에 상태(`완료. 경로 ROUTE / 변경률 X% / 등급 Y / 자체검증 N/7 통과`), 최종 윤문본 또는 `final.md` 링크, 핵심 before→after, 진단·게이트·finalize 상태와 남은 경고를 포함한다. 변경률은 `verify_gates.py` 출력값을 SSOT로 사용한다. `final.md`에는 `<!-- HUMANIZE-SUMMARY -->` 블록을 정확히 하나 유지한다.

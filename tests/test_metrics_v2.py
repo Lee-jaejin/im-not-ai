@@ -593,5 +593,27 @@ class AntithesisCountTests(unittest.TestCase):
         self.assertEqual(result["v2_metrics"]["antithesis_count"], 2)
 
 
+class TestHiddenActorRate(unittest.TestCase):
+    """v2.8 fork — A-25 행위자·행동 숨김 근사 metric."""
+
+    def test_nominalized_predicate_counted(self) -> None:
+        text = "배포 전 데이터 검증 작업이 수행되었다. 결과는 다음 날 공유됐다."
+        self.assertAlmostEqual(metrics_v2.hidden_actor_rate(text), 0.5)
+
+    def test_actor_verb_sentence_not_counted(self) -> None:
+        text = "팀이 배포 전에 데이터를 검증했다. 서버가 사용자에게 안내한다."
+        self.assertEqual(metrics_v2.hidden_actor_rate(text), 0.0)
+
+    def test_empty_is_zero(self) -> None:
+        self.assertEqual(metrics_v2.hidden_actor_rate(""), 0.0)
+
+    def test_compute_all_v2_exposes_key(self) -> None:
+        result = metrics_v2.compute_all_v2(
+            "요청이 이루어졌다.", genre="essay", baseline_v2_path=BASELINE_V2_PATH
+        )
+        self.assertIn("hidden_actor_rate", result["v2_metrics"])
+        self.assertIsNone(result["v2_z_scores"]["hidden_actor_rate"])
+
+
 if __name__ == "__main__":
     unittest.main()

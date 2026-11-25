@@ -96,7 +96,7 @@ Format: one line per pattern — `ID [severity] trigger → prescription`. No ex
 
 ## Self-verification checklist (run immediately after rewriting)
 
-Check all six within seconds of producing the rewrite. **Any single violation rolls that edit back.**
+Check all seven within seconds of producing the rewrite. **Any single violation rolls that edit back.**
 
 1. **Proper nouns, numbers, dates, quotes and content anchors 100% preserved** — not one character different from the source. Does each sentence's core content noun survive in its base form at least once?
    - Standard technical terms (API, prompt, token, pipeline…) stay in the original or as loanwords — no mechanical translation (prompt → `지시문` ✗)
@@ -105,12 +105,13 @@ Check all six within seconds of producing the rewrite. **Any single violation ro
 4. **Register preserved, in both directions** — formal source stays formal, colloquial source stays colloquial. Do not drop to plain style, and do not raise formality (`-했-` → `-하였-`)
 5. **Zero residual S1 patterns** — specifically D-1~D-3, A-7, A-8, A-16, C-5, C-10, C-11, H-1, I-1, J-2
 6. **No invented expression (subtraction only)** — no metaphor, rhetorical flourish or stock phrase that wasn't in the source (`기록적인 성과`, `~로 평가된다`). Living speech — explanatory dashes, short interjections, rhetorical questions — is preserved
+7. **Clarity (v2.8 fork)** — after rewriting, can a reader tell who did what in every sentence, is the conclusion at the top of the paragraph, and is it written in ordinary words? If stock phrases are gone but actor and point are still hidden, rewrite that sentence — by rearranging the source's own words only, never by inventing facts. Dropped subjects that the previous two sentences recover are fine (Korean omits subjects naturally)
 
 On violation: roll back the edit → rewrite → re-check. **Self-loop runs at most once.** If it still fails, emit the result anyway and record "N self-verification items failed" in the `<!-- HUMANIZE-SUMMARY -->` block of `final.md`.
 
 ## Grades (self-scored)
 
-- **A** — 0 residual S1, ≤2 residual S2, change rate 10–25%, all 6 checklist items pass
-- **B** — 0 residual S1, ≤4 residual S2, ≥5 checklist items pass
-- **C** — 1–2 residual S1, or ≤4 checklist items pass → recommend strict mode to the user
+- **A** — 0 residual S1, ≤2 residual S2, change rate 10–25%, all 7 checklist items pass
+- **B** — 0 residual S1, ≤4 residual S2, ≥6 checklist items pass
+- **C** — 1–2 residual S1, or ≤5 checklist items pass → recommend strict mode to the user
 - **D** — 3+ residual S1, or change rate above 50% → recommend aborting
