@@ -656,6 +656,29 @@ def interference_index(text: str) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
+# === v2.8 fork: 명확성 축 — A-25 행위자·행동 숨김 (speculative) ===
+# ---------------------------------------------------------------------------
+
+# 행동 명사 + 만능 서술어("요청이 이루어졌다", "검증 작업이 수행되었다"). 영어 명사화
+# 피동(a request was made)의 직역 표층. 행위자가 문장에 없다는 판정은 하지 않는다 —
+# 한국어는 주어 생략이 자연스러워 표층만으로는 구분할 수 없고, 이 표층 자체가 행위자를
+# 지우는 구문이다. 근거는 Zonder Labs 2026-11-09(영어)뿐이라 baseline 없이 관측만 한다.
+_HIDDEN_ACTOR_RE = re.compile(
+    r"(?:요청|검증|확인|검토|점검|안내|처리|조치|논의|합의|결정|분석|조정|보고|평가|배포|적용)"
+    r"(?:\s*작업)?\s*(?:이|가)\s*(?:이루어|진행|실시|수행|마련|제공|요구)(?:되|돼|졌)"
+)
+
+
+def hidden_actor_rate(text: str) -> float:
+    """A-25 근사 — 행동 명사 + 만능 서술어 문장의 비율 (0~1). speculative."""
+    sents = _split_sentences(text)
+    if not sents:
+        return 0.0
+    hits = sum(1 for s in sents if _HIDDEN_ACTOR_RE.search(s))
+    return hits / len(sents)
+
+
+# ---------------------------------------------------------------------------
 # === C-8 ANTITHESIS COUNTER (구조 게이트 — 전멸 판정 전용) ===
 # ---------------------------------------------------------------------------
 
@@ -791,6 +814,8 @@ def compute_all_v2(
         # C-8 대구 카운트 — 진단 앵커로만 노출. baseline placeholder라 z는
         # None이어도 무방. 판정은 before/after 전멸 비교로만 한다.
         "antithesis_count": antithesis_count(text),
+        # v2.8 fork 명확성 축(A-25) — speculative, baseline 없음(z None)
+        "hidden_actor_rate": hidden_actor_rate(text),
     }
     interference = interference_index(text)
 
